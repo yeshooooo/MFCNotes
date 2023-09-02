@@ -14,3 +14,72 @@ MFC常用的几种已经写好的框架单文档、多文档与基于对话框
 
 # 3. 访问控件的方法
 
+[访问控件的7种方法](https://blog.csdn.net/pengz0807/article/details/47685583)
+
+```cpp
+// Demo3Dlg.cpp : implementation file
+
+// 方法1：GetDlgItem 
+void CDemo3Dlg::OnBnClickedButton1()
+{
+	// TODO: Add your control notification handler code here
+	// 
+	CString str1, str2, str3;
+
+	GetDlgItem(IDC_EDIT1)->GetWindowTextW(str1);
+	GetDlgItem(IDC_EDIT2)->GetWindowTextW(str2);
+	GetDlgItem(IDC_EDIT3)->GetWindowTextW(str3);
+
+	int a, b, c;
+
+	// 字符转int
+	a = _wtoi(str1.GetBuffer()); // 默认是unicode字符集用_wtoi来转换
+	b = _wtoi(str2.GetBuffer());
+	c = a + b;
+
+	// int 转CString
+	CString strint;
+	strint.Format(L"%d", c);
+
+	GetDlgItem(IDC_EDIT3)->SetWindowTextW(strint);
+}
+
+// 方法2： GetDlgItemText和SetDlgItemText
+void CDemo3Dlg::OnBnClickedButton2()
+{
+	// TODO: Add your control notification handler code here
+
+	int a, b, c;
+	TCHAR c1[10], c2[10], c3[10];
+	GetDlgItemText(IDC_EDIT1, c1, 10);
+	GetDlgItemText(IDC_EDIT2, c2, 10);
+	a = _ttoi(c1); // TCHAR 转int
+	b = _ttoi(c2);
+
+	c = a + b;
+
+	// 将int 转换成字符型
+	_itot_s(c, c3, 10);
+	SetDlgItemText(IDC_EDIT3, c3);
+}
+
+// 方法3：类似于方法1，只是用来接收值的变量类型不同
+void CDemo3Dlg::OnBnClickedButton3()
+{
+	// TODO: Add your control notification handler code here
+	int a, b, c;
+	TCHAR c1[10], c2[10], c3[10];
+	GetDlgItem(IDC_EDIT1)->GetWindowTextW(c1, 10);
+	GetDlgItem(IDC_EDIT2)->GetWindowTextW(c2, 10);
+	a = _ttoi(c1); // TCHAR 转int
+	b = _ttoi(c2);
+
+	c = a + b;
+
+	// 将int 转换成字符型
+	_itot_s(c, c3, 10);
+	//SetDlgItemText(IDC_EDIT3, c3);
+	GetDlgItem(IDC_EDIT3)->SetWindowTextW(c3);
+}
+```
+
