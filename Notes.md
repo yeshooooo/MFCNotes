@@ -16,6 +16,8 @@ MFC常用的几种已经写好的框架单文档、多文档与基于对话框
 
 [访问控件的7种方法](https://blog.csdn.net/pengz0807/article/details/47685583)
 
+[类型转换](https://blog.csdn.net/pengz0807/article/details/47685733)
+
 ```cpp
 // Demo3Dlg.cpp : implementation file
 
