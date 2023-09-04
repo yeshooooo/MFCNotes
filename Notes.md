@@ -85,3 +85,9 @@ void CDemo3Dlg::OnBnClickedButton3()
 }
 ```
 
+# 4. VC驿站教程中MFC部分
+
+[地址](https://www.bilibili.com/video/BV1Bb411e7av?p=23&vd_source=c6ca89f75d00cd4da634736edfcca1ae)
+
+### 4.1 MFC框架简介
+
