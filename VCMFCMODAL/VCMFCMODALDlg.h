@@ -1,20 +1,20 @@
 
-// VCMFCDlgFirstDlg.h : header file
+// VCMFCMODALDlg.h : header file
 //
 
 #pragma once
 
 
-// CVCMFCDlgFirstDlg dialog
-class CVCMFCDlgFirstDlg : public CDialog
+// CVCMFCMODALDlg dialog
+class CVCMFCMODALDlg : public CDialog
 {
 // Construction
 public:
-	CVCMFCDlgFirstDlg(CWnd* pParent = nullptr);	// standard constructor
+	CVCMFCMODALDlg(CWnd* pParent = nullptr);	// standard constructor
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_VCMFCDLGFIRST_DIALOG };
+	enum { IDD = IDD_VCMFCMODAL_DIALOG };
 #endif
 
 	protected:
@@ -27,19 +27,10 @@ protected:
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButton1();
-	virtual void OnCancel();
 	afx_msg void OnBnClickedButton2();
-
-	CButton* pCheckBox;
-	CButton m_CheckBtn;
-	int m_CheckStatus;
-
-	
 };
-

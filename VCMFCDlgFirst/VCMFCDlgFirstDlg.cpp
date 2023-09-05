@@ -12,6 +12,16 @@
 #define new DEBUG_NEW
 #endif
 
+//小作业
+int GetEditValue(int value)
+{
+	return value;
+
+}
+
+
+
+
 
 // CAboutDlg dialog used for App About
 
@@ -52,13 +62,17 @@ END_MESSAGE_MAP()
 
 CVCMFCDlgFirstDlg::CVCMFCDlgFirstDlg(CWnd* pParent /*=nullptr*/)
 	: CDialog(IDD_VCMFCDLGFIRST_DIALOG, pParent)
+	, m_CheckStatus(0)
 {
+	pCheckBox = NULL;
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CVCMFCDlgFirstDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_CHECK1, m_CheckBtn);
+	DDX_Check(pDX, IDC_CHECK1, m_CheckStatus);
 }
 
 // 消息映射的宏，把某一条消息对应的类消息响应函数绑定起来
@@ -68,6 +82,7 @@ BEGIN_MESSAGE_MAP(CVCMFCDlgFirstDlg, CDialog)// 参数1：要绑定的类，参数2：父类
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CVCMFCDlgFirstDlg::OnBnClickedButton1) // 这行就是双击按钮后自动添加的
+	ON_BN_CLICKED(IDC_BUTTON2, &CVCMFCDlgFirstDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -103,6 +118,7 @@ BOOL CVCMFCDlgFirstDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+	pCheckBox = (CButton*)GetDlgItem(IDC_CHECK1);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -161,6 +177,21 @@ HCURSOR CVCMFCDlgFirstDlg::OnQueryDragIcon()
 void CVCMFCDlgFirstDlg::OnBnClickedButton1()
 {
 	// TODO: Add your control notification handler code here
+// 	// 方法1：
+// 	// 全局API函数
+// 	HWND hCheckBox = ::GetDlgItem(m_hWnd, IDC_CHECK1);
+// 	int iCheckApi = ::SendMessage(hCheckBox, BM_GETCHECK, 0, 0);
+// 	// -------
+// 	// 方法2：
+// 	// MFC方法，是对全局API的封装，默认从当前窗口获取，省略第一个参数窗口句柄
+// 	// Radio Button ,Check Box ,Button都是CButton类, 所以都可以写出CButton*
+// 	// CWnd* pCheckBox =  GetDlgItem(IDC_CHECK1); // 返回控件指针
+// 	CButton* pCheckBox =  (CButton*)GetDlgItem(IDC_CHECK1); // 返回控件指针
+// 	// 未选中是0，选中是1
+	int iCheck = pCheckBox->GetCheck(); // 本质上还是发送Win32消息
+
+	
+
 }
 
 
@@ -169,4 +200,19 @@ void CVCMFCDlgFirstDlg::OnCancel()
 	// TODO: Add your specialized code here and/or call the base class
 	MessageBox(_T("取消按钮被点击"));
 	CDialog::OnCancel();
+}
+
+
+void CVCMFCDlgFirstDlg::OnBnClickedButton2()
+{
+	// TODO: Add your control notification handler code here
+// 	int iCheck = pCheckBox->GetCheck();
+// 
+// 	int iRet = m_CheckBtn.GetCheck();
+	//UpdateData(TRUE);
+	//m_CheckStatus;
+	
+	// 手动设置为1，回写给界面
+	m_CheckStatus = 1;
+	UpdateData(FALSE);
 }

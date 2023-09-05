@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VCDlgTest", "VCDlgTest\VCDl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VCMFCDlgFirst", "VCMFCDlgFirst\VCMFCDlgFirst.vcxproj", "{2A6420C4-0080-41EA-9598-F044CA451D3B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VCMFCMODAL", "VCMFCMODAL\VCMFCMODAL.vcxproj", "{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -121,6 +123,14 @@ Global
 		{2A6420C4-0080-41EA-9598-F044CA451D3B}.Release|x64.Build.0 = Release|x64
 		{2A6420C4-0080-41EA-9598-F044CA451D3B}.Release|x86.ActiveCfg = Release|Win32
 		{2A6420C4-0080-41EA-9598-F044CA451D3B}.Release|x86.Build.0 = Release|Win32
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Debug|x64.ActiveCfg = Debug|x64
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Debug|x64.Build.0 = Debug|x64
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Debug|x86.ActiveCfg = Debug|Win32
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Debug|x86.Build.0 = Debug|Win32
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Release|x64.ActiveCfg = Release|x64
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Release|x64.Build.0 = Release|x64
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Release|x86.ActiveCfg = Release|Win32
+		{9774FD22-3DE9-476E-A9B8-FEDB4245C23E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
