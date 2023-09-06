@@ -25,4 +25,9 @@ public:
 	virtual void OnCancel();
 	virtual void OnOK();
 	virtual void PostNcDestroy();
+	afx_msg void OnEnChangeEdit1();
+	CEdit m_defaulta;
+	afx_msg void OnBnClickedButton1();
+
+	CWnd* m_pParentDlg;
 };

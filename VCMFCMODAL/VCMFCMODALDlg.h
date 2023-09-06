@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "CFMTDialog.h"
 
 // CVCMFCMODALDlg dialog
 class CVCMFCMODALDlg : public CDialog
@@ -33,4 +33,9 @@ protected:
 public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
+	CFMTDialog m_ChildDlg;
+	afx_msg void OnBnClickedButton3();
 };
+
+// 在主窗口类的头文件中，声明主窗口类的全局变量指针
+extern CVCMFCMODALDlg* pMainDlg;

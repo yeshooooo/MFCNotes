@@ -519,3 +519,151 @@ void CFMTDialog::PostNcDestroy()
 ```
 
 ![image-20230906012615272](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309060126591.png)
+
+# 7. 对话框之间数据的传递
+
+![image-20230906200039813](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309062000581.png)
+
+父传子很简单，因为子是在父中创建的，很容易拿到子的引用
+
+子传父：
+
+==方法1：==
+
+设置全局变量，设置在主窗口类的cpp中定义，在主窗口类的.h文件中声明一下,声明的时候要加extern
+
+并且在主对话窗口的初始化函数中赋值(注意是初始化函数OnInitDialog，而不是构造函数)，把this赋值给他
+
+
+
+
+
+```
+//    主窗口类头文件中声明
+// 在主窗口类的头文件中，声明主窗口类的全局变量指针
+extern CVCMFCMODALDlg* pMainDlg; 
+
+
+//主窗口类cpp文件中定义
+CVCMFCMODALDlg* pMainDlg = NULL;
+//主窗口类cpp文件中的初始化函数
+BOOL CVCMFCMODALDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// Set the icon for this dialog.  The framework does this automatically
+	//  when the application's main window is not a dialog
+	SetIcon(m_hIcon, TRUE);			// Set big icon
+	SetIcon(m_hIcon, FALSE);		// Set small icon
+
+	// TODO: Add extra initialization here
+	pMainDlg = this;
+	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+```
+
+用法： 在子窗口中包含以下，直接拿过来用
+
+子窗口按钮事件函数中
+
+```cpp
+	pMainDlg->SetDlgItemTextW(IDC_EDIT1, str);
+```
+
+
+
+==方法2：==
+
+利用mfc提供的函数直接获取父窗口指针
+
+```cpp
+	// 方法2： 获取父窗口的指针
+	// 获取子窗口上的内容
+	CString str;
+	GetDlgItemText(IDC_EDIT1, str);
+	// 子窗口可以直接获取父窗口的引用,获取到的是CWnd* 类型的，因为已经明确知道了
+	// 父窗口指针类型，所以直接强转
+	CVCMFCMODALDlg* pParent =  (CVCMFCMODALDlg*)GetParent();
+	pParent->SetDlgItemTextW(IDC_EDIT1, str);
+```
+
+
+
+==方法3：==
+
+App类获取法
+
+默认在主线程中，主窗口的地址赋值给了App类的成员m_pMainWnd函数
+
+直接拿过来就行
+
+```cpp
+	// 方法3： App类法
+	CVCMFCMODALDlg* pParent = (CVCMFCMODALDlg*)AfxGetApp()->m_pMainWnd;
+	pParent->SetDlgItemTextW(IDC_EDIT1, str);
+```
+
+
+
+==方法4：==
+
+参数传递法（可能会发生重复包含的情况）
+
+可以用类型转换的思想解决重复包含，在子里用CWnd类型或者VOID代替父类型号，不用直接包含父类型
+
+cpp中包含父类性然后强转就没事了
+
+==父窗口创建子窗口的时候，在创建成功或者创建之前都有办法传递进去==
+
+
+
+步骤1： 在子窗口类中加一个父窗口指针的成员
+
+这时候父窗口内部有子窗口的对象，子窗口内部有父窗口的指针
+
+	// 把父窗口指针传给子窗口成员
+	m_ChildDlg.m_pParentDlg = this; 
+
+	// 方法4： 参数传递法
+	
+	// 用CWnd* 或者 VOID*是为了防止重复包含，编译不通过
+	CVCMFCMODALDlg* pMainWnd = (CVCMFCMODALDlg*)m_pParentDlg;
+	m_pParentDlg->SetDlgItemTextW(IDC_EDIT1, str);
+
+![image-20230907003938155](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309070039355.png)
+
+### 7.4 类外函数调用窗口操作
+
+![image-20230907004032178](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309070040547.png)
+
+```cpp
+// 类外函数
+// 参数传递方式
+void GetEditText(CWnd* pDlgWnd)
+{
+	// 获得主对话框上编辑框的文本
+	CString str;
+	pDlgWnd->GetDlgItemTextW(IDC_EDIT1, str);
+	MessageBox(NULL, str, TEXT("Title"), MB_OKCANCEL);
+	
+	// 额外补充
+	HWND hDlg = pDlgWnd->GetSafeHwnd(); // 获取窗口句柄
+	CWnd* pWnd = CWnd::FromHandle(hDlg); //有了窗口句柄后获取获取CWnd*
+}
+void CVCMFCMODALDlg::OnBnClickedButton3()
+{
+	// TODO: Add your control notification handler code here
+	GetEditText(this);
+
+}
+```
+
+![image-20230907005844961](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309070058219.png)
+
+在不同的作用域下需要的参数个数是不同的，虽然名字相同，但是代表的意义是不同的有的是类 中的函数，有的是全局SDK API，他们参数是不同的
+
+如果要在类中使用全局的，在函数名前加双冒号
+
+![image-20230907010106681](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309070101727.png)
+
+![image-20230907010327592](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309070103436.png)

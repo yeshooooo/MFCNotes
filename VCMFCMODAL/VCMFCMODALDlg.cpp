@@ -33,6 +33,7 @@ BEGIN_MESSAGE_MAP(CVCMFCMODALDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CVCMFCMODALDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CVCMFCMODALDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &CVCMFCMODALDlg::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -48,7 +49,7 @@ BOOL CVCMFCMODALDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
-
+	pMainDlg = this;
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -99,16 +100,47 @@ void CVCMFCMODALDlg::OnBnClickedButton1()
 
 // 创建非模态对话框
 
-#include "CFMTDialog.h"
+//#include "CFMTDialog.h"
 // CFMTDialog dlg; // 这里要设置为全局变量，不然对话框会一闪而过，被自动回收
 void CVCMFCMODALDlg::OnBnClickedButton2()
 {
 	// TODO: Add your control notification handler code here
-	CFMTDialog* pFMTDlg = new CFMTDialog(); // 在堆中创建对象，也可以防止被自动销毁
-	BOOL bRet = pFMTDlg->Create(IDD_DIALOG2); // 不同于模态对话框，这里要输入对话框ID
-
+	//CFMTDialog* pFMTDlg = new CFMTDialog(); // 在堆中创建对象，也可以防止被自动销毁
+// 	
+// 	BOOL bRet = pFMTDlg->Create(IDD_DIALOG2); // 不同于模态对话框，这里要输入对话框ID
+// 
+// 	if (bRet)
+// 	{
+// 		pFMTDlg->ShowWindow(SW_SHOW);
+// 	}
+	// 把父窗口指针传给子窗口成员
+	m_ChildDlg.m_pParentDlg = this; 
+	BOOL bRet = m_ChildDlg.Create(IDD_DIALOG2);
 	if (bRet)
 	{
-		pFMTDlg->ShowWindow(SW_SHOW);
+		m_ChildDlg.SetDlgItemTextW(IDC_EDIT1, TEXT("我是被父窗口设置的字符串"));
+		m_ChildDlg.ShowWindow(SW_SHOW);
 	}
+}
+
+CVCMFCMODALDlg* pMainDlg = NULL;
+
+// 类外函数
+// 参数传递方式
+void GetEditText(CWnd* pDlgWnd)
+{
+	// 获得主对话框上编辑框的文本
+	CString str;
+	pDlgWnd->GetDlgItemTextW(IDC_EDIT1, str);
+	MessageBox(NULL, str, TEXT("Title"), MB_OKCANCEL);
+	
+	// 额外补充
+	HWND hDlg = pDlgWnd->GetSafeHwnd(); // 获取窗口句柄
+	CWnd* pWnd = CWnd::FromHandle(hDlg); //有了窗口句柄后获取获取CWnd*
+}
+void CVCMFCMODALDlg::OnBnClickedButton3()
+{
+	// TODO: Add your control notification handler code here
+	GetEditText(this);
+
 }
