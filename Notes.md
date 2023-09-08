@@ -623,7 +623,7 @@ cpp中包含父类性然后强转就没事了
 
 	// 把父窗口指针传给子窗口成员
 	m_ChildDlg.m_pParentDlg = this; 
-
+	
 	// 方法4： 参数传递法
 	
 	// 用CWnd* 或者 VOID*是为了防止重复包含，编译不通过
@@ -667,3 +667,11 @@ void CVCMFCMODALDlg::OnBnClickedButton3()
 ![image-20230907010106681](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309070101727.png)
 
 ![image-20230907010327592](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309070103436.png)
+
+# 8. 临时目录清理工具
+
+# 8.1 界面制作
+
+![image-20230908223734642](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309082237964.png)
+
+![image-20230908233220084](https://yeshooonotes.oss-cn-shenzhen.aliyuncs.com/notespic/202309082332627.png)
